@@ -5,13 +5,24 @@ client = OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
 )
 
+prompt = """
+    Você é um especialista tradutor de textos de português oara Inglês.
+    Apenas traduza e responda a tradução do texto que você receber.
+"""
+
 # Receber a resposta toda de uma vez
 response = client.chat.completions.create(
     model='gpt-5-nano-2025-08-07',
     messages=[
-        {"role": "user", "content": "Me fale mais sobre o Fiat Elba 1988"}
+        {
+            "role": "system",
+            "content": prompt
+        },
+        {
+            "role": "user",
+            "content": "O livro está na mesa"
+        }
     ],
-    # stream=True
 )
 print(response.choices[0].message.content)
 
